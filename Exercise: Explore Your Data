@@ -1,0 +1,432 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "e021f7be",
+   "metadata": {
+    "papermill": {
+     "duration": 0.005026,
+     "end_time": "2024-07-05T01:06:15.438666",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:15.433640",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "**[Machine Learning Course Home Page](https://www.kaggle.com/learn/machine-learning)**\n",
+    "\n",
+    "---\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8ae8ca31",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004254,
+     "end_time": "2024-07-05T01:06:15.447818",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:15.443564",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "This exercise will test your ability to read a data file and understand statistics about the data.\n",
+    "\n",
+    "In later exercises, you will apply techniques to filter the data, build a machine learning model, and iteratively improve your model.\n",
+    "\n",
+    "The course examples use data from Melbourne. To ensure you can apply these techniques on your own, you will have to apply them to a new dataset (with house prices from Iowa).\n",
+    "\n",
+    "The exercises use a \"notebook\" coding environment.  In case you are unfamiliar with notebooks, we have a [90-second intro video](https://www.youtube.com/watch?v=4C2qMnaIKL4).\n",
+    "\n",
+    "# Exercises\n",
+    "\n",
+    "Run the following cell to set up code-checking, which will verify your work as you go."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "13e5f98a",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-07-05T01:06:15.459460Z",
+     "iopub.status.busy": "2024-07-05T01:06:15.459031Z",
+     "iopub.status.idle": "2024-07-05T01:06:16.554048Z",
+     "shell.execute_reply": "2024-07-05T01:06:16.552338Z"
+    },
+    "papermill": {
+     "duration": 1.103965,
+     "end_time": "2024-07-05T01:06:16.556886",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:15.452921",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Setup Complete\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Set up code checking\n",
+    "from learntools.core import binder\n",
+    "binder.bind(globals())\n",
+    "from learntools.machine_learning.ex2 import *\n",
+    "print(\"Setup Complete\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f859d125",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004492,
+     "end_time": "2024-07-05T01:06:16.566075",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:16.561583",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "## Step 1: Loading Data\n",
+    "Read the Iowa data file into a Pandas DataFrame called `home_data`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "ce45fc41",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-07-05T01:06:16.577927Z",
+     "iopub.status.busy": "2024-07-05T01:06:16.576629Z",
+     "iopub.status.idle": "2024-07-05T01:06:16.633741Z",
+     "shell.execute_reply": "2024-07-05T01:06:16.632645Z"
+    },
+    "papermill": {
+     "duration": 0.065994,
+     "end_time": "2024-07-05T01:06:16.636693",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:16.570699",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"outcomeType\": 1, \"valueTowardsCompletion\": 0.5, \"interactionType\": 1, \"questionType\": 1, \"questionId\": \"1_LoadHomeData\", \"learnToolsVersion\": \"0.3.4\", \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\"}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#33cc33\">Correct</span>"
+      ],
+      "text/plain": [
+       "Correct"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "\n",
+    "# Path of the file to read\n",
+    "iowa_file_path = '../input/home-data-for-ml-course/train.csv'\n",
+    "\n",
+    "# Fill in the line below to read the file into a variable home_data\n",
+    "home_data = pd.read_csv(iowa_file_path)\n",
+    "\n",
+    "# Call line below with no argument to check that you've loaded the data correctly\n",
+    "step_1.check()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "1e1d20dc",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-07-05T01:06:16.648643Z",
+     "iopub.status.busy": "2024-07-05T01:06:16.648216Z",
+     "iopub.status.idle": "2024-07-05T01:06:16.653358Z",
+     "shell.execute_reply": "2024-07-05T01:06:16.652201Z"
+    },
+    "papermill": {
+     "duration": 0.0143,
+     "end_time": "2024-07-05T01:06:16.655945",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:16.641645",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "# Lines below will give you a hint or solution code\n",
+    "#step_1.hint()\n",
+    "# step_1.solution()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "24d8d74e",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004692,
+     "end_time": "2024-07-05T01:06:16.665759",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:16.661067",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "## Step 2: Review The Data\n",
+    "Use the command you learned to view summary statistics of the data. Then fill in variables to answer the following questions"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "97344eed",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-07-05T01:06:16.677297Z",
+     "iopub.status.busy": "2024-07-05T01:06:16.676903Z",
+     "iopub.status.idle": "2024-07-05T01:06:16.683872Z",
+     "shell.execute_reply": "2024-07-05T01:06:16.682731Z"
+    },
+    "papermill": {
+     "duration": 0.015863,
+     "end_time": "2024-07-05T01:06:16.686536",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:16.670673",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/markdown": [],
+      "text/plain": [
+       "<learntools.core.constants.PlaceholderValue at 0x7ebdf5da0610>"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Print summary statistics in next line\n",
+    "____"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "f6b1c753",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-07-05T01:06:16.699318Z",
+     "iopub.status.busy": "2024-07-05T01:06:16.698267Z",
+     "iopub.status.idle": "2024-07-05T01:06:16.708076Z",
+     "shell.execute_reply": "2024-07-05T01:06:16.706856Z"
+    },
+    "papermill": {
+     "duration": 0.01897,
+     "end_time": "2024-07-05T01:06:16.710633",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:16.691663",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"outcomeType\": 1, \"valueTowardsCompletion\": 0.5, \"interactionType\": 1, \"questionType\": 1, \"questionId\": \"2_HomeDescription\", \"learnToolsVersion\": \"0.3.4\", \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\"}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#33cc33\">Correct</span>"
+      ],
+      "text/plain": [
+       "Correct"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# What is the average lot size (rounded to nearest integer)?\n",
+    "avg_lot_size = 10517\n",
+    "\n",
+    "# As of today, how old is the newest home (current year - the date in which it was built)\n",
+    "newest_home_age = 14\n",
+    "\n",
+    "# Checks your answers\n",
+    "step_2.check()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "ec742bd0",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2024-07-05T01:06:16.723574Z",
+     "iopub.status.busy": "2024-07-05T01:06:16.723149Z",
+     "iopub.status.idle": "2024-07-05T01:06:16.728476Z",
+     "shell.execute_reply": "2024-07-05T01:06:16.727158Z"
+    },
+    "papermill": {
+     "duration": 0.014758,
+     "end_time": "2024-07-05T01:06:16.731019",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:16.716261",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "#step_2.hint()\n",
+    "# step_2.solution()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b5dca792",
+   "metadata": {
+    "papermill": {
+     "duration": 0.0052,
+     "end_time": "2024-07-05T01:06:16.741913",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:16.736713",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "## Think About Your Data\n",
+    "\n",
+    "The newest house in your data isn't that new.  A few potential explanations for this:\n",
+    "1. They haven't built new houses where this data was collected.\n",
+    "1. The data was collected a long time ago. Houses built after the data publication wouldn't show up.\n",
+    "\n",
+    "If the reason is explanation #1 above, does that affect your trust in the model you build with this data? What about if it is reason #2?\n",
+    "\n",
+    "How could you dig into the data to see which explanation is more plausible?\n",
+    "\n",
+    "Check out this **[discussion thread](https://www.kaggle.com/learn-forum/60581)** to see what others think or to add your ideas.\n",
+    "\n",
+    "# Keep Going\n",
+    "\n",
+    "You are ready for **[Your First Machine Learning Model](https://www.kaggle.com/dansbecker/your-first-machine-learning-model).**\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "11b621e1",
+   "metadata": {
+    "papermill": {
+     "duration": 0.005305,
+     "end_time": "2024-07-05T01:06:16.752862",
+     "exception": false,
+     "start_time": "2024-07-05T01:06:16.747557",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "---\n",
+    "**[Machine Learning Course Home Page](https://www.kaggle.com/learn/machine-learning)**\n",
+    "\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kaggle": {
+   "accelerator": "none",
+   "dataSources": [
+    {
+     "datasetId": 2709,
+     "sourceId": 38454,
+     "sourceType": "datasetVersion"
+    },
+    {
+     "datasetId": 108980,
+     "sourceId": 260251,
+     "sourceType": "datasetVersion"
+    }
+   ],
+   "isGpuEnabled": false,
+   "isInternetEnabled": false,
+   "language": "python",
+   "sourceType": "notebook"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  },
+  "papermill": {
+   "default_parameters": {},
+   "duration": 5.510152,
+   "end_time": "2024-07-05T01:06:17.280959",
+   "environment_variables": {},
+   "exception": null,
+   "input_path": "__notebook__.ipynb",
+   "output_path": "__notebook__.ipynb",
+   "parameters": {},
+   "start_time": "2024-07-05T01:06:11.770807",
+   "version": "2.5.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
